@@ -1,17 +1,24 @@
+import { useState, useEffect } from 'react'
+
 import { Link } from 'react-router-dom'
 import { Row, Col, Image, Card, Button, ListGroup } from 'react-bootstrap'
+import axios from 'axios'
 
-import products from '../products'
 import Rating from '../components/Rating'
 
 const ProductScreen = ({ match }) => {
-  // 1st method
-  // const id = useParams()
-  // const product = products.find((product) => product._id === id.id)
-
-  // 2nd method
   const id = match.params.id
-  const product = products.find((product) => product._id === id)
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const res = await axios.get(`/api/v1/products/${id}`)
+
+      setProduct(res.data)
+    }
+
+    fetchProduct()
+  }, [id])
 
   return (
     <>
@@ -30,8 +37,8 @@ const ProductScreen = ({ match }) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
-                vlaue={product.rating}
-                text={`${product.numReviews} outline-light`}
+                value={product.rating}
+                text={`${product.numReviews} reviews`}
               />
             </ListGroup.Item>
             <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
@@ -45,7 +52,7 @@ const ProductScreen = ({ match }) => {
                 <Row>
                   <Col>Price:</Col>
                   <Col>
-                    <storng>${product.price}</storng>
+                    <strong>${product.price}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
