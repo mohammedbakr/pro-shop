@@ -14,7 +14,7 @@ const ProductScreen = ({ match }) => {
     const fetchProduct = async () => {
       const res = await axios.get(`/api/v1/products/${id}`)
 
-      setProduct(res.data)
+      setProduct(res.data.data)
     }
 
     fetchProduct()

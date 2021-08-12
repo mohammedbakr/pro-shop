@@ -1,15 +1,20 @@
-import products from '../data/products.js'
+import asyncHandler from 'express-async-handler'
 
-export const getProducts = (req, res, next) => {
-  res.status(200).json(products)
-}
+import Product from '../models/product.js'
+import ErrorResponse from '../utils/errorResponse.js'
 
-export const getProduct = (req, res, next) => {
+export const getProducts = asyncHandler(async (req, res, next) => {
+  const products = await Product.find()
+
+  res.status(200).json({ success: true, data: products })
+})
+
+export const getProduct = asyncHandler(async (req, res, next) => {
   const id = req.params.id
 
-  const product = products.find((product) => product._id === id)
+  const product = await Product.findById(id)
+  if (!product)
+    return next(new ErrorResponse(`Product not found with id of ${id}`), 404)
 
-  if (!product) res.status(404).json({ success: false, data: [] })
-
-  res.status(200).json(product)
-}
+  res.status(200).json({ success: true, data: product })
+})
