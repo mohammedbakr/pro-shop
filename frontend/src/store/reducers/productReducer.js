@@ -5,11 +5,13 @@ import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS
-} from '../actions/types'
+} from '../types/productTypes'
 
 const initialState = {
   products: [],
-  product: {}
+  product: {},
+  error: null,
+  loading: false
 }
 
 // eslint-disable-next-line

@@ -7,7 +7,7 @@ import {
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
   PRODUCT_FAIL
-} from './types'
+} from '../types/productTypes'
 
 export const getProducts = () => async (dispatch) => {
   try {
