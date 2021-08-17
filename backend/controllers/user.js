@@ -2,7 +2,6 @@ import asyncHandler from 'express-async-handler'
 
 import User from '../models/user.js'
 import ErrorResponse from '../utils/errorResponse.js'
-import generateAndSendTokenResponse from '../utils/sendTokenresponse.js'
 
 const createUser = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body
@@ -17,7 +16,7 @@ const createUser = asyncHandler(async (req, res, next) => {
     password
   })
 
-  generateAndSendTokenResponse(user, 200, res)
+  res.status(201).json({ success: true, data: user })
 })
 
 export { createUser }

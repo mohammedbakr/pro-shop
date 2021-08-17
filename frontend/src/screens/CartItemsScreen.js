@@ -16,7 +16,6 @@ const CartItemsScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
   const { cartItems } = cart
 
-  console.table('hi')
   const dispatch = useDispatch()
 
   useEffect(() => {
