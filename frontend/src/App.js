@@ -11,6 +11,9 @@ import CartItemsScreen from './screens/CartItemsScreen'
 import LoginScreen from './screens/LoginScreen'
 import RegisterScreen from './screens/RegisterScreen'
 import ProfileScreen from './screens/ProfileScreen'
+import ShippingScreen from './screens/checout-process/ShippingScreen'
+import PaymentScreen from './screens/checout-process/PaymentScreen'
+import PlaceOrderScreen from './screens/checout-process/PlaceOrderScreen'
 
 const App = () => {
   return (
@@ -21,7 +24,10 @@ const App = () => {
           <Container>
             <Route path='/login' component={LoginScreen} />
             <Route path='/register' component={RegisterScreen} />
-            <Route path='/profile' exact component={ProfileScreen} />
+            <Route path='/profile' component={ProfileScreen} />
+            <Route path='/shipping' component={ShippingScreen} />
+            <Route path='/payment' component={PaymentScreen} />
+            <Route path='/placeorder' component={PlaceOrderScreen} />
             <Route path='/products/:id' component={ProductScreen} />
             <Route path='/cart/:productId?' component={CartItemsScreen} />
             <Route path='/' exact component={HomeScreen} />

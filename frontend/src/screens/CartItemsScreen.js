@@ -4,7 +4,7 @@ import { Card, Col, Row, ListGroup, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useLocation, useParams } from 'react-router-dom'
 
-import Cart from '../components/CartItem'
+import CartItem from '../components/CartItem'
 import Message from '../components/layout/Message'
 import { addtoCart } from '../store/actions'
 
@@ -35,7 +35,7 @@ const CartItemsScreen = ({ history }) => {
             Your cart is empty <Link to='/'>Go Back</Link>
           </Message>
         ) : (
-          cartItems.map((item) => <Cart key={item.product} item={item} />)
+          cartItems.map((item) => <CartItem key={item.product} item={item} />)
         )}
       </Col>
 

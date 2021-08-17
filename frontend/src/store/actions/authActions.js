@@ -70,24 +70,6 @@ export const register = (authInfo) => async (dispatch) => {
   }
 }
 
-// export const getAuthProfile = () => async (dispatch, getState) => {
-//   if (getState().auth.auth && getState().auth.token)
-//     setAuthToken(localStorage.token)
-
-//   try {
-//     dispatch({ type: AUTH_DETAILS_REQUEST })
-
-//     const { data } = await axios.get(`/api/v1/auth/profile`)
-
-//     dispatch({
-//       type: AUTH_DETAILS_SUCCESS,
-//       payload: data.data
-//     })
-//   } catch (error) {
-//     dispatch({ type: AUTH_DETAILS_FAIL, payload: error.response.data.error })
-//   }
-// }
-
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   if (getState().auth.auth && getState().auth.token)
     setAuthToken(localStorage.token)
