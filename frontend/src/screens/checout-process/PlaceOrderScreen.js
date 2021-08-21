@@ -8,7 +8,7 @@ import CheckoutSteps from '../../components/CheckoutSteps'
 import Message from '../../components/layout/Message'
 import { addOrderItems } from '../../store/actions'
 
-const ShippingScreen = ({ history }) => {
+const PlaceOrderScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart)
   const { cartItems, shippingAddress, paymentMethod } = cart
 
@@ -18,7 +18,7 @@ const ShippingScreen = ({ history }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (success) history.push(`/order/${order?._id}`)
+    if (success) history.push(`/orders/${order?._id}`)
   }, [success, history, order])
 
   //   Calculate prices
@@ -140,4 +140,4 @@ const ShippingScreen = ({ history }) => {
   )
 }
 
-export default ShippingScreen
+export default PlaceOrderScreen

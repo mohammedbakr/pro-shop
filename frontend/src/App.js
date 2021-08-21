@@ -14,6 +14,7 @@ import ProfileScreen from './screens/ProfileScreen'
 import ShippingScreen from './screens/checout-process/ShippingScreen'
 import PaymentScreen from './screens/checout-process/PaymentScreen'
 import PlaceOrderScreen from './screens/checout-process/PlaceOrderScreen'
+import OrderScreen from './screens/OrderScreen'
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
             <Route path='/shipping' component={ShippingScreen} />
             <Route path='/payment' component={PaymentScreen} />
             <Route path='/placeorder' component={PlaceOrderScreen} />
+            <Route path='/orders/:id' component={OrderScreen} />
             <Route path='/products/:id' component={ProductScreen} />
             <Route path='/cart/:productId?' component={CartItemsScreen} />
             <Route path='/' exact component={HomeScreen} />

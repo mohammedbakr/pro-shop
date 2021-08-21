@@ -44,6 +44,10 @@ export const logout = () => (dispatch) => {
 
   localStorage.removeItem('auth')
   localStorage.removeItem('token')
+  localStorage.removeItem('cartItems')
+  localStorage.removeItem('shipping-address')
+
+  document.location.href = '/login'
 }
 
 export const register = (authInfo) => async (dispatch) => {

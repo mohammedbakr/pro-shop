@@ -6,4 +6,9 @@ export {
   savePaymentMethod
 } from './cartActions'
 export { register, login, updateUserProfile, logout } from './authActions'
-export { addOrderItems } from './orderActions'
+export {
+  addOrderItems,
+  getOrderById,
+  payOrder,
+  listMyOrders
+} from './orderActions'
