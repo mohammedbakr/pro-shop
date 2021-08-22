@@ -12,3 +12,4 @@ export {
   payOrder,
   listMyOrders
 } from './orderActions'
+export { getUsers, getUserById, updateUser, deleteUser } from './userActions'

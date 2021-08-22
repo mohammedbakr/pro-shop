@@ -15,6 +15,8 @@ import ShippingScreen from './screens/checout-process/ShippingScreen'
 import PaymentScreen from './screens/checout-process/PaymentScreen'
 import PlaceOrderScreen from './screens/checout-process/PlaceOrderScreen'
 import OrderScreen from './screens/OrderScreen'
+import UserListScreen from './screens/admin/UserListScreen'
+import UserEditScreen from './screens/admin/UserEditScreen'
 
 const App = () => {
   return (
@@ -23,6 +25,11 @@ const App = () => {
         <Header />
         <main className='py-3'>
           <Container>
+            <Route
+              path='/admin/users/:userId/edit'
+              component={UserEditScreen}
+            />
+            <Route path='/admin/users' exact component={UserListScreen} />
             <Route path='/login' component={LoginScreen} />
             <Route path='/register' component={RegisterScreen} />
             <Route path='/profile' component={ProfileScreen} />

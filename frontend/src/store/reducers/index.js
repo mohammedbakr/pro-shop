@@ -6,6 +6,7 @@ import authReducer from './authReducer'
 import orderReducer from './orderReducer'
 import orderPayReducer from './orderPayReducer'
 import orderListMyReducer from './orderListMyReducer'
+import userReducer from './userReducer'
 
 export default combineReducers({
   product: productReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   auth: authReducer,
   order: orderReducer,
   orderPay: orderPayReducer,
-  myOrders: orderListMyReducer
+  myOrders: orderListMyReducer,
+  user: userReducer
 })
