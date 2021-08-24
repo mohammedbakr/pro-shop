@@ -4,13 +4,18 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 
-import Message from '../../components/layout/Message'
-import Loader from '../../components/layout/Loader'
-import { getUsers, deleteUser } from '../../store/actions'
+import Message from '../../../components/layout/Message'
+import Loader from '../../../components/layout/Loader'
+import { getUsers, deleteUser } from '../../../store/actions'
 
 const UserListScreen = ({ history }) => {
   const user = useSelector((state) => state.user)
-  const { loading, error, users, success } = user
+  const {
+    loading,
+    error,
+    users,
+    success: { deleteSuccess }
+  } = user
 
   const authDetails = useSelector((state) => state.auth)
   const { auth, token } = authDetails
@@ -34,7 +39,7 @@ const UserListScreen = ({ history }) => {
   return (
     <>
       <h1>Users</h1>
-      {success && (
+      {deleteSuccess && (
         <Message variant='success'>User deleted successfully</Message>
       )}
       {error && <Message variant='danger'>{error}</Message>}

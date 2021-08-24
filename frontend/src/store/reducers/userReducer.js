@@ -18,7 +18,10 @@ const initialState = {
   user: {},
   loading: false,
   error: null,
-  success: false
+  success: {
+    updateSuccess: false,
+    deleteSuccess: false
+  }
 }
 
 // eslint-disable-next-line
@@ -29,8 +32,13 @@ export default (state = initialState, action) => {
     case USER_UPDATE_REQUEST:
     case USER_DETAILS_REQUEST:
       return {
-        ...initialState,
-        loading: true
+        ...state,
+        loading: true,
+        error: false,
+        success: {
+          updateSuccess: false,
+          deleteSuccess: false
+        }
       }
     case USER_LIST_SEUCCESS:
       return {
@@ -49,14 +57,18 @@ export default (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload,
-        success: true
+        success: {
+          updateSuccess: true
+        }
       }
     case USER_DELETE_SEUCCESS:
       return {
         ...state,
         loading: false,
         users: [...state.users].filter((user) => user._id !== action.payload),
-        success: true
+        success: {
+          deleteSuccess: true
+        }
       }
     case USER_LIST_FAIL:
     case USER_DELETE_FAIL:

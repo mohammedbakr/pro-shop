@@ -1,7 +1,6 @@
 import express from 'express'
 
 import {
-  createUser,
   deleteUser,
   getUserById,
   getUsers,
@@ -13,8 +12,6 @@ import isAdmin from '../../middleware/isAdmin.js'
 const router = express.Router()
 
 router.get('/', protect, isAdmin, getUsers)
-
-router.post('/', protect, isAdmin, createUser)
 
 router.get('/:id', protect, isAdmin, getUserById)
 

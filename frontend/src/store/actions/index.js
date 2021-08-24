@@ -1,4 +1,10 @@
-export { getProducts, getProduct } from './productActions'
+export {
+  getProducts,
+  createProduct,
+  getProductById,
+  updateProduct,
+  deleteProduct
+} from './productActions'
 export {
   addtoCart,
   removeFromCart,

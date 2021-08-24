@@ -1,7 +1,6 @@
 import axios from 'axios'
 
 import setAuthToken from '../../axios/setAuth'
-
 import {
   USER_DELETE_FAIL,
   USER_DELETE_REQUEST,

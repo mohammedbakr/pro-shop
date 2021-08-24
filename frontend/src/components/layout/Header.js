@@ -27,23 +27,6 @@ const Header = () => {
                   <i className='fas fa-shopping-cart'></i> Cart
                 </Nav.Link>
               </LinkContainer>
-              {auth && token ? (
-                <NavDropdown title={auth.name} id='nav-dropdown'>
-                  <LinkContainer to='/profile'>
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
-                  </LinkContainer>
-
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    Log Out
-                  </NavDropdown.Item>
-                </NavDropdown>
-              ) : (
-                <LinkContainer to='/login'>
-                  <Nav.Link>
-                    <i className='fas fa-user'></i> Sign In
-                  </Nav.Link>
-                </LinkContainer>
-              )}
               {auth && token && auth.isAdmin && (
                 <NavDropdown title='Admin' id='admin-menu'>
                   <LinkContainer to='/admin/users'>
@@ -58,6 +41,23 @@ const Header = () => {
                     <NavDropdown.Item>Orders</NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
+              )}
+              {auth && token ? (
+                <NavDropdown title={auth.name} id='profile-menu'>
+                  <LinkContainer to='/profile'>
+                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Log Out
+                  </NavDropdown.Item>
+                </NavDropdown>
+              ) : (
+                <LinkContainer to='/login'>
+                  <Nav.Link>
+                    <i className='fas fa-user'></i> Sign In
+                  </Nav.Link>
+                </LinkContainer>
               )}
             </Nav>
           </Navbar.Collapse>

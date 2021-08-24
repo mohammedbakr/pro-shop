@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, Card, Button, ListGroup, Form } from 'react-bootstrap'
 
 import Rating from '../components/Rating'
-import { getProduct } from '../store/actions'
+import { getProductById } from '../store/actions'
 import Message from '../components/layout/Message'
 import Loader from '../components/layout/Loader'
 
@@ -20,7 +20,7 @@ const ProductScreen = ({ history }) => {
   const { loading, error, product } = productData
 
   useEffect(() => {
-    dispatch(getProduct(id))
+    dispatch(getProductById(id))
   }, [dispatch, id])
 
   const addToCartHandler = () => {

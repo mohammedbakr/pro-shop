@@ -4,10 +4,10 @@ import { Link, useParams } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 
-import Message from '../../components/layout/Message'
-import Loader from '../../components/layout/Loader'
-import FormContainer from '../../components/layout/FormContainer'
-import { getUserById, updateUser } from '../../store/actions'
+import Message from '../../../components/layout/Message'
+import Loader from '../../../components/layout/Loader'
+import FormContainer from '../../../components/layout/FormContainer'
+import { getUserById, updateUser } from '../../../store/actions'
 
 const UserEditScreen = ({ history }) => {
   const { userId } = useParams()
@@ -22,10 +22,15 @@ const UserEditScreen = ({ history }) => {
   const { auth, token } = authDetails
 
   const userDetails = useSelector((state) => state.user)
-  const { user, loading, error, success } = userDetails
+  const {
+    user,
+    loading,
+    error,
+    success: { updateSuccess }
+  } = userDetails
 
   useEffect(() => {
-    if (success)
+    if (updateSuccess)
       setTimeout(() => {
         history.push('/admin/users')
       }, 2000)
@@ -40,7 +45,7 @@ const UserEditScreen = ({ history }) => {
         }
       } else history.push('/login')
     }
-  }, [dispatch, history, userId, auth, token, user, success])
+  }, [dispatch, history, userId, auth, token, user, updateSuccess])
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -57,7 +62,7 @@ const UserEditScreen = ({ history }) => {
       </Link>
       <FormContainer>
         <h1>Edit User</h1>
-        {success && (
+        {updateSuccess && (
           <Message variant='success'>
             User updated successfully.
             <br />
