@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 import axios from 'axios'
-import { Card, Col, ListGroup, Row } from 'react-bootstrap'
+import { Card, Col, ListGroup, Row, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { PayPalButton } from 'react-paypal-button-v2'
@@ -9,19 +9,25 @@ import { PayPalButton } from 'react-paypal-button-v2'
 import CheckoutCartItems from '../components/CheckoutCartItem'
 import Message from '../components/layout/Message'
 import Loader from '../components/layout/Loader'
-import { getOrderById, payOrder } from '../store/actions'
-import { ORDER_PAY_RESET } from '../store/types/orderTypes'
+import { getOrderById, payOrder, deliverOrder } from '../store/actions'
+import { ORDER_DELIVER_RESET, ORDER_PAY_RESET } from '../store/types/orderTypes'
 
-const OrderScreen = () => {
-  const { id } = useParams()
+const OrderScreen = ({ history }) => {
+  const { orderId } = useParams()
 
   const [sdkReady, setSdkReady] = useState(false)
+
+  const authDetails = useSelector((state) => state.auth)
+  const { auth, token } = authDetails
 
   const orderDetails = useSelector((state) => state.order)
   const { order, error, loading } = orderDetails
 
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
+
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
   const dispatch = useDispatch()
 
@@ -39,24 +45,38 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
-    const addPaypalScript = async () => {
-      // Renaming in destructuring
-      const { data: clientId } = await axios.get('/api/v1/config/paypal')
-      script.current.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
-      script.current.async = true
-      setSdkReady(true)
-    }
+    if (auth && token) {
+      const addPaypalScript = async () => {
+        // Renaming in destructuring
+        const { data: clientId } = await axios.get('/api/v1/config/paypal')
+        script.current.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
+        script.current.async = true
+        setSdkReady(true)
+      }
 
-    if (!order || successPay) {
-      dispatch(getOrderById(id))
-      dispatch({ type: ORDER_PAY_RESET })
-    } else if (!order.isPaid)
-      if (!window.paypal) addPaypalScript()
-      else setSdkReady(true)
-  }, [dispatch, order, successPay, id])
+      if (!order || successPay || successDeliver || order._id !== orderId) {
+        dispatch(getOrderById(orderId))
+        dispatch({ type: ORDER_PAY_RESET })
+        dispatch({ type: ORDER_DELIVER_RESET })
+      } else if (!order.isPaid)
+        if (!window.paypal) addPaypalScript()
+        else setSdkReady(true)
+    } else history.push('/login')
+  }, [
+    dispatch,
+    history,
+    auth,
+    token,
+    order,
+    successPay,
+    successDeliver,
+    orderId
+  ])
 
   const successPaymentHandler = (paymentResult) =>
     dispatch(payOrder(order._id, paymentResult))
+
+  const deliverHandler = () => dispatch(deliverOrder(orderId))
 
   return loading ? (
     <Loader />
@@ -165,6 +185,18 @@ const OrderScreen = () => {
                       onSuccess={successPaymentHandler}
                     />
                   )}
+                </ListGroup.Item>
+              )}
+              {loadingDeliver && <Loader />}
+              {auth && auth.isAdmin && order.isPaid && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-block'
+                    onClick={deliverHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
                 </ListGroup.Item>
               )}
             </ListGroup>

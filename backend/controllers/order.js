@@ -3,6 +3,15 @@ import asyncHandler from 'express-async-handler'
 import Order from '../models/order.js'
 import ErrorResponse from '../utils/errorResponse.js'
 
+const getOrders = asyncHandler(async (req, res, next) => {
+  const orders = await Order.find().populate({
+    path: 'user',
+    select: '_id name'
+  })
+
+  res.status(200).json({ success: true, data: orders })
+})
+
 const addOrderItems = asyncHandler(async (req, res, next) => {
   const { orderItems } = req.body
 
@@ -65,10 +74,32 @@ const updateOrderToPaid = asyncHandler(async (req, res, next) => {
   res.status(200).json({ success: true, data: updatedOrder })
 })
 
+const updateOrderToDelivered = asyncHandler(async (req, res, next) => {
+  const orderId = req.params.id
+
+  const order = await Order.findById(orderId)
+  if (!order)
+    return next(new ErrorResponse(`Order not found with id ${orderId}`, 404))
+
+  order.isDelivered = true
+  order.deliveredAt = Date.now()
+
+  const updatedOrder = await order.save()
+
+  res.status(200).json({ success: true, data: updatedOrder })
+})
+
 const getMyOrders = asyncHandler(async (req, res, next) => {
   const orders = await Order.find({ user: req.user._id })
 
   res.status(200).json({ success: true, data: orders })
 })
 
-export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders }
+export {
+  getOrders,
+  addOrderItems,
+  getOrderById,
+  updateOrderToPaid,
+  updateOrderToDelivered,
+  getMyOrders
+}
