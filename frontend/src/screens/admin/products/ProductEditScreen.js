@@ -43,7 +43,11 @@ const ProductEditScreen = ({ history }) => {
       }, 2000)
     else {
       if (auth && token && auth.isAdmin) {
-        if (!product.name || product._id.toString() !== productId.toString())
+        if (
+          !product ||
+          !product.name ||
+          product._id.toString() !== productId.toString()
+        )
           dispatch(getProductById(productId))
         else {
           setName(product.name)

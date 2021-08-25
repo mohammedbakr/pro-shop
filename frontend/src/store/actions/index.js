@@ -21,3 +21,4 @@ export {
   listMyOrders
 } from './orderActions'
 export { getUsers, getUserById, updateUser, deleteUser } from './userActions'
+export { createReview } from './reviewActions'

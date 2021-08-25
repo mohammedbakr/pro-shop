@@ -18,7 +18,9 @@ import {
 
 const initialState = {
   products: [],
-  product: {},
+  product: {
+    reviews: []
+  },
   error: null,
   loading: false,
   success: {
@@ -39,7 +41,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: true,
-        error: false,
+        error: null,
         success: {
           createSuccess: false,
           updateSuccess: false,
