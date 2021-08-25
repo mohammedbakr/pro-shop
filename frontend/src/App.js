@@ -33,15 +33,25 @@ const App = () => {
                 path='/admin/users/:userId/edit'
                 component={UserEditScreen}
               />
-              <Route path='/admin/users' exact component={UserListScreen} />
+              <Route
+                path='/admin/users/:page'
+                component={UserListScreen}
+                exact
+              />
+              <Route path='/admin/users' component={UserListScreen} exact />
               <Route
                 path='/admin/products/:productId/edit'
                 component={ProductEditScreen}
               />
               <Route
-                path='/admin/products'
-                exact
+                path='/admin/products/:page'
                 component={ProductListScreen}
+                exact
+              />
+              <Route
+                path='/admin/products'
+                component={ProductListScreen}
+                exact
               />
               <Route path='/admin/orders' exact component={OrderListScreen} />
               <Route path='/login' component={LoginScreen} />
@@ -53,8 +63,14 @@ const App = () => {
               <Route path='/orders/:orderId' component={OrderScreen} />
               <Route path='/products/:productId' component={ProductScreen} />
               <Route path='/cart/:productId?' component={CartItemsScreen} />
-              <Route path='/search/:keyword' component={HomeScreen} />
-              <Route path='/' exact component={HomeScreen} />
+              <Route path='/search/:keyword' component={HomeScreen} exact />
+              <Route path='/page/:page' component={HomeScreen} exact />
+              <Route
+                path='/search/:keyword/page/:page'
+                component={HomeScreen}
+                exact
+              />
+              <Route path='/' component={HomeScreen} exact />
             </Switch>
           </Container>
         </main>

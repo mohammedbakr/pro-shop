@@ -4,9 +4,22 @@ import User from '../models/user.js'
 import ErrorResponse from '../utils/errorResponse.js'
 
 const getUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({})
+  const itemsPerPage = 10
+  const page = +req.params.page || 1
 
-  res.status(200).json({ success: true, data: users })
+  const total = await User.countDocuments()
+  const users = await User.find()
+    .skip(itemsPerPage * (page - 1))
+    .limit(itemsPerPage)
+
+  res.status(200).json({
+    success: true,
+    data: {
+      users,
+      page,
+      pagesCount: Math.ceil(total / itemsPerPage)
+    }
+  })
 })
 
 const getUserById = asyncHandler(async (req, res, next) => {

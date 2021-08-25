@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import Message from '../../../components/layout/Message'
 import Loader from '../../../components/layout/Loader'
@@ -11,8 +12,11 @@ import {
   createProduct,
   deleteProduct
 } from '../../../store/actions'
+import Paginate from '../../../components/layout/Paginate'
 
 const ProductListScreen = ({ history }) => {
+  const { page = 1 } = useParams()
+
   const authDetails = useSelector((state) => state.auth)
   const { auth, token } = authDetails
 
@@ -21,7 +25,9 @@ const ProductListScreen = ({ history }) => {
     products,
     loading,
     error,
-    success: { createSuccess, deleteSuccess }
+    success: { createSuccess, deleteSuccess },
+    currentPage,
+    pagesCount
   } = product
 
   const dispatch = useDispatch()
@@ -30,14 +36,14 @@ const ProductListScreen = ({ history }) => {
 
   useEffect(() => {
     if (auth && token && auth.isAdmin) {
-      dispatch(getProducts())
+      dispatch(getProducts('', page))
       // Not good for performance
       // Good for user experience
       if (createSuccess)
         history.push(`/admin/products/${createdProduct._id}/edit`)
     } else history.push('/login')
     // eslint-disable-next-line
-  }, [dispatch, history, auth, token, createSuccess])
+  }, [dispatch, history, auth, token, createSuccess, page])
 
   const createProductHandler = () => {
     dispatch(createProduct())
@@ -109,6 +115,12 @@ const ProductListScreen = ({ history }) => {
               ))}
             </tbody>
           </Table>
+          <Paginate
+            page={currentPage}
+            pages={pagesCount}
+            path='products'
+            isAdmin={true}
+          />
         </>
       )}
     </>

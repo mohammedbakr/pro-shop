@@ -5,6 +5,8 @@ import ErrorResponse from '../utils/errorResponse.js'
 import deleteFile from '../utils/file.js'
 
 const getProducts = asyncHandler(async (req, res, next) => {
+  const itemsPerPage = 10
+  const page = +req.query.page || 1
   const q = req.query.q
     ? {
         name: {
@@ -14,9 +16,19 @@ const getProducts = asyncHandler(async (req, res, next) => {
       }
     : {}
 
+  const total = await Product.countDocuments({ ...q })
   const products = await Product.find({ ...q })
+    .skip(itemsPerPage * (page - 1))
+    .limit(itemsPerPage)
 
-  res.status(200).json({ success: true, data: products })
+  res.status(200).json({
+    success: true,
+    data: {
+      products,
+      page,
+      pagesCount: Math.ceil(total / itemsPerPage)
+    }
+  })
 })
 
 const createProduct = asyncHandler(async (req, res, next) => {

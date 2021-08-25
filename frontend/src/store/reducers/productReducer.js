@@ -27,7 +27,9 @@ const initialState = {
     createSuccess: false,
     updateSuccess: false,
     deleteSuccess: false
-  }
+  },
+  currentPage: 0,
+  pagesCount: 0
 }
 
 // eslint-disable-next-line
@@ -52,7 +54,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        products: action.payload
+        products: action.payload.products,
+        currentPage: action.payload.page,
+        pagesCount: action.payload.pagesCount
       }
     case PRODUCT_CREATE_SUCCESS:
       return {

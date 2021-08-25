@@ -5,21 +5,23 @@ import { Row, Col } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 
 import Product from '../components/Product'
-import { getProducts } from '../store/actions'
 import Loader from '../components/layout/Loader'
 import Message from '../components/layout/Message'
+import Paginate from '../components/layout/Paginate'
+import { getProducts } from '../store/actions'
 
 const HomeScreen = () => {
   const { keyword } = useParams()
+  const { page = 1 } = useParams()
 
   const dispatch = useDispatch()
 
   const product = useSelector((state) => state.product)
-  const { loading, error, products } = product
+  const { loading, error, products, currentPage, pagesCount } = product
 
   useEffect(() => {
-    dispatch(getProducts(keyword))
-  }, [dispatch, keyword])
+    dispatch(getProducts(keyword, page))
+  }, [dispatch, keyword, page])
 
   return (
     <>
@@ -29,13 +31,20 @@ const HomeScreen = () => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Row>
-          {products.map((product) => (
-            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-              <Product product={product} />
-            </Col>
-          ))}
-        </Row>
+        <>
+          <Row>
+            {products.map((product) => (
+              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                <Product product={product} />
+              </Col>
+            ))}
+          </Row>
+          <Paginate
+            page={currentPage}
+            pages={pagesCount}
+            keyword={keyword ? keyword : ''}
+          />
+        </>
       )}
     </>
   )

@@ -16,20 +16,29 @@ import {
   USER_UPDATE_SEUCCESS
 } from '../types/userTypes'
 
-export const getUsers = () => async (dispatch, getState) => {
-  if (getState().auth.auth && getState().auth.token)
-    setAuthToken(localStorage.token)
+export const getUsers =
+  (page = '') =>
+  async (dispatch, getState) => {
+    if (getState().auth.auth && getState().auth.token)
+      setAuthToken(localStorage.token)
 
-  try {
-    dispatch({ type: USER_LIST_REQUEST })
+    try {
+      dispatch({ type: USER_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/v1/users')
+      const { data } = await axios.get(`/api/v1/users?page=${page}`)
 
-    dispatch({ type: USER_LIST_SEUCCESS, payload: data.data })
-  } catch (error) {
-    dispatch({ type: USER_LIST_FAIL, payload: error.response.data.error })
+      dispatch({
+        type: USER_LIST_SEUCCESS,
+        payload: {
+          users: data.data.users,
+          page: data.data.page,
+          pagesCount: data.data.pagesCount
+        }
+      })
+    } catch (error) {
+      dispatch({ type: USER_LIST_FAIL, payload: error.response.data.error })
+    }
   }
-}
 
 export const getUserById = (id) => async (dispatch, getState) => {
   if (getState().auth.auth && getState().auth.token)

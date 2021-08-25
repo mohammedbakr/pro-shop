@@ -20,14 +20,23 @@ import {
 } from '../types/productTypes'
 
 export const getProducts =
-  (keyword = '') =>
+  (keyword = '', page = '') =>
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST })
 
-      const { data } = await axios.get(`/api/v1/products?q=${keyword}`)
+      const { data } = await axios.get(
+        `/api/v1/products?q=${keyword}&page=${page}`
+      )
 
-      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data.data })
+      dispatch({
+        type: PRODUCT_LIST_SUCCESS,
+        payload: {
+          products: data.data.products,
+          page: data.data.page,
+          pagesCount: data.data.pagesCount
+        }
+      })
     } catch (error) {
       dispatch({
         type: PRODUCT_LIST_FAIL,

@@ -21,7 +21,9 @@ const initialState = {
   success: {
     updateSuccess: false,
     deleteSuccess: false
-  }
+  },
+  currentPage: 0,
+  pagesCount: 0
 }
 
 // eslint-disable-next-line
@@ -44,7 +46,9 @@ export default (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        users: action.payload
+        users: action.payload.users,
+        currentPage: action.payload.page,
+        pagesCount: action.payload.pagesCount
       }
     case USER_DETAILS_SEUCCESS:
       return {
