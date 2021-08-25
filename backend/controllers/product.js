@@ -31,6 +31,12 @@ const getProducts = asyncHandler(async (req, res, next) => {
   })
 })
 
+const getTopRatedProducts = asyncHandler(async (req, res, next) => {
+  const products = await Product.find().sort({ rating: -1 }).limit(3)
+
+  res.status(200).json({ success: true, data: products })
+})
+
 const createProduct = asyncHandler(async (req, res, next) => {
   const userId = req.user._id
 
@@ -110,6 +116,7 @@ const uploadProductimage = asyncHandler(async (req, res, next) => {
 
 export {
   getProducts,
+  getTopRatedProducts,
   createProduct,
   getProductById,
   updateProduct,

@@ -13,11 +13,15 @@ import {
   PRODUCT_UPDATE_SUCCESS,
   PRODUCT_CREATE_REQUEST,
   PRODUCT_CREATE_SUCCESS,
-  PRODUCT_CREATE_FAIL
+  PRODUCT_CREATE_FAIL,
+  PRODUCT_TOP_REQUEST,
+  PRODUCT_TOP_FAIL,
+  PRODUCT_TOP_SUCCESS
 } from '../types/productTypes'
 
 const initialState = {
   products: [],
+  topRatedProdcuts: [],
   product: {
     reviews: []
   },
@@ -37,6 +41,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case PRODUCT_LIST_REQUEST:
     case PRODUCT_CREATE_REQUEST:
+    case PRODUCT_TOP_REQUEST:
     case PRODUCT_REQUEST:
     case PRODUCT_UPDATE_REQUEST:
     case PRODUCT_DELETE_REQUEST:
@@ -67,6 +72,12 @@ export default (state = initialState, action) => {
           createSuccess: true
         }
       }
+    case PRODUCT_TOP_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        topRatedProdcuts: action.payload
+      }
     case PRODUCT_SUCCESS:
       return {
         ...state,
@@ -94,6 +105,7 @@ export default (state = initialState, action) => {
         }
       }
     case PRODUCT_LIST_FAIL:
+    case PRODUCT_TOP_FAIL:
     case PRODUCT_CREATE_FAIL:
     case PRODUCT_FAIL:
     case PRODUCT_UPDATE_FAIL:

@@ -1,5 +1,6 @@
 export {
   getProducts,
+  getTopRatedProducts,
   createProduct,
   getProductById,
   updateProduct,
