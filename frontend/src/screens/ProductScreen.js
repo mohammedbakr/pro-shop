@@ -7,6 +7,7 @@ import { Row, Col, Image, Card, Button, ListGroup, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Message from '../components/layout/Message'
 import Loader from '../components/layout/Loader'
+import Meta from '../components/Meta'
 import { getProductById, createReview } from '../store/actions'
 import { REVIEW_CREATE_RESET } from '../store/types/reviewTypes'
 
@@ -61,6 +62,7 @@ const ProductScreen = ({ history }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid />
