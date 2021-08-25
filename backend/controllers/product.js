@@ -5,7 +5,16 @@ import ErrorResponse from '../utils/errorResponse.js'
 import deleteFile from '../utils/file.js'
 
 const getProducts = asyncHandler(async (req, res, next) => {
-  const products = await Product.find()
+  const q = req.query.q
+    ? {
+        name: {
+          $regex: req.query.q,
+          $options: 'i'
+        }
+      }
+    : {}
+
+  const products = await Product.find({ ...q })
 
   res.status(200).json({ success: true, data: products })
 })

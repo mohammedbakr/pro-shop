@@ -53,6 +53,7 @@ const App = () => {
               <Route path='/orders/:orderId' component={OrderScreen} />
               <Route path='/products/:productId' component={ProductScreen} />
               <Route path='/cart/:productId?' component={CartItemsScreen} />
+              <Route path='/search/:keyword' component={HomeScreen} />
               <Route path='/' exact component={HomeScreen} />
             </Switch>
           </Container>

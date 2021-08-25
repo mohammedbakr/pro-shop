@@ -1,10 +1,14 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { logout } from '../../store/actions'
+import SearchBox from './SearchBox'
 
 const Header = () => {
+  const history = useHistory()
+
   const authDetails = useSelector((state) => state.auth)
   const { auth, token } = authDetails
 
@@ -21,6 +25,7 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
+            <SearchBox history={history} />
             <Nav className='ml-auto'>
               <LinkContainer to='/cart'>
                 <Nav.Link>

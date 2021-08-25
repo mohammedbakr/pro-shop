@@ -19,20 +19,22 @@ import {
   PRODUCT_CREATE_FAIL
 } from '../types/productTypes'
 
-export const getProducts = () => async (dispatch) => {
-  try {
-    dispatch({ type: PRODUCT_LIST_REQUEST })
+export const getProducts =
+  (keyword = '') =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: PRODUCT_LIST_REQUEST })
 
-    const { data } = await axios.get('/api/v1/products')
+      const { data } = await axios.get(`/api/v1/products?q=${keyword}`)
 
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data.data })
-  } catch (error) {
-    dispatch({
-      type: PRODUCT_LIST_FAIL,
-      payload: error.response.data.error
-    })
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data.data })
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_LIST_FAIL,
+        payload: error.response.data.error
+      })
+    }
   }
-}
 
 export const createProduct = () => async (dispatch, getState) => {
   if (getState().auth.auth && getState().auth.token)
