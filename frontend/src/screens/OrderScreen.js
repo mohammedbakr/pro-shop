@@ -40,7 +40,7 @@ const OrderScreen = ({ history }) => {
     }
 
     order.itemsPrice = addDecimals(
-      order.orderItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+      +order.orderItems.reduce((acc, item) => acc + +item.price * +item.qty, 0)
     )
   }
 
@@ -55,9 +55,9 @@ const OrderScreen = ({ history }) => {
       }
 
       if (!order || successPay || successDeliver || order._id !== orderId) {
-        dispatch(getOrderById(orderId))
         dispatch({ type: ORDER_PAY_RESET })
         dispatch({ type: ORDER_DELIVER_RESET })
+        dispatch(getOrderById(orderId))
       } else if (!order.isPaid)
         if (!window.paypal) addPaypalScript()
         else setSdkReady(true)

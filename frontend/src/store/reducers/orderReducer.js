@@ -12,7 +12,11 @@ import {
 
 const initialState = {
   orders: [],
-  order: null,
+  order: {
+    user: {},
+    shippingAddress: {},
+    orderItems: []
+  },
   loading: true,
   error: null,
   success: false

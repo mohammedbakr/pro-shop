@@ -54,8 +54,6 @@ export const getTopRatedProducts = () => async (dispatch) => {
 
     const { data } = await axios.get('/api/v1/products/top')
 
-    console.log(data)
-
     dispatch({
       type: PRODUCT_TOP_SUCCESS,
       payload: data.data

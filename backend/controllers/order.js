@@ -35,14 +35,14 @@ const getOrderById = asyncHandler(async (req, res, next) => {
   if (!order)
     return next(new ErrorResponse(`Order not found with id ${id}`, 404))
 
-  if (order.user._id.toString() !== req.user._id.toString())
+  if (order.user._id.toString() === req.user._id.toString() || req.user.isAdmin)
+    res.status(200).json({ success: true, data: order })
+  else
     return next(
       new ErrorResponse(
         `You are not authorized to view the order with id ${id}`
       )
     )
-
-  res.status(200).json({ success: true, data: order })
 })
 
 const updateOrderToPaid = asyncHandler(async (req, res, next) => {
