@@ -30,11 +30,16 @@ const ProductScreen = ({ history }) => {
   const { loading: reviewLoading, error: reviewError, success } = reviewDetails
 
   useEffect(() => {
+    if (success) {
+      setRating(0)
+      setComment('')
+    }
+
     if (!product._id || product._id !== productId) {
       dispatch(getProductById(productId))
       dispatch({ type: REVIEW_CREATE_RESET })
     }
-  }, [dispatch, product, productId])
+  }, [dispatch, product, productId, success])
 
   const addToCartHandler = () => {
     history.push(`/cart/${productId}?qty=${qty}`)
@@ -45,9 +50,6 @@ const ProductScreen = ({ history }) => {
 
     const review = { rating, comment }
     dispatch(createReview(productId, review))
-
-    setRating(0)
-    setComment('')
   }
 
   return (
