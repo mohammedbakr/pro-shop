@@ -6,7 +6,9 @@ const PageNotFound = () => {
 
   return (
     <>
-      <h4>Page Not Found with URL: </h4>
+      <h4>
+        Page Not Found with URL: <code>{location.pathname}</code>{' '}
+      </h4>
       <Link to='/'>
         <h5 style={{ textDecoration: 'underline', color: 'blue' }}>
           Go Home Page

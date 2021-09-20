@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container, PageItem } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 import { Provider } from 'react-redux'
 import store from './store'
 
