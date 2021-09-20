@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { Container } from 'react-bootstrap'
+import { Container, PageItem } from 'react-bootstrap'
 import { Provider } from 'react-redux'
 import store from './store'
 
@@ -20,6 +20,7 @@ import UserEditScreen from './screens/admin/users/UserEditScreen'
 import ProductListScreen from './screens/admin/products/ProductListScreen'
 import ProductEditScreen from './screens/admin/products/ProductEditScreen'
 import OrderListScreen from './screens/admin/orders/OrderListScreen'
+import PageNotFound from './components/layout/PageNotFound'
 
 const App = () => {
   return (
@@ -71,6 +72,7 @@ const App = () => {
                 exact
               />
               <Route path='/' component={HomeScreen} exact />
+              <Route component={PageNotFound} />
             </Switch>
           </Container>
         </main>
