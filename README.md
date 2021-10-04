@@ -34,7 +34,7 @@ You can also install and setup Babel if you would like
 
 Create a .env file in then root and add the following
 
-```
+```bash
 NODE_ENV = development
 PORT = 5000
 MONGO_URI = your mongodb uri
@@ -44,7 +44,7 @@ PAYPAL_CLIENT_ID = your paypal client id
 
 ### Install Dependencies (frontend & backend)
 
-```
+```bash
 npm install
 cd frontend
 npm install
@@ -52,7 +52,7 @@ npm install
 
 ### Run
 
-```
+```bash
 # Run frontend (:3000) & backend (:5000)
 npm run dev
 
@@ -62,7 +62,7 @@ npm run server
 
 ## Build & Deploy
 
-```
+```bash
 # Create frontend prod build
 cd frontend
 npm run build
@@ -74,7 +74,7 @@ There is a Heroku postbuild script, so if you push to Heroku, no need to build m
 
 You can use the following commands to seed the database with some sample users and products as well as destroy all data
 
-```
+```bash
 # Import data
 npm run data:import
 
@@ -82,7 +82,7 @@ npm run data:import
 npm run data:destroy
 ```
 
-```
+```bash
 Sample User Logins
 
 admin@gmail.com (Admin)
