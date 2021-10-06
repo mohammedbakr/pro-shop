@@ -9,7 +9,7 @@ import productRoutes from './routes/v1/product.js'
 import orderRoutes from './routes/v1/order.js'
 import configRoutes from './routes/v1/config.js'
 import multer from './utils/multer.js'
-import connectDB from './config/db.js'
+import { connectDB } from './config/db.js'
 import { notFound, errorHandler } from './middleware/error.js'
 
 // Load env variables
@@ -55,3 +55,5 @@ app.listen(PORT, () =>
     `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`
   )
 )
+
+export default app
