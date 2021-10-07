@@ -25,7 +25,7 @@ const login = asyncHandler(async (req, res, next) => {
 
   // Validate email & password
   if (!email || !password)
-    return next(new ErrorResponse('please provide an email and password', 40))
+    return next(new ErrorResponse('please provide an email and password.', 400))
 
   const user = await User.findOne({ email }).select('+password')
   if (!user) return next(new ErrorResponse('Invalid credentials.', 401))
